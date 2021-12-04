@@ -55,11 +55,6 @@ jobs:
           cd build
           cmake ..
           make -j4 OpenAL
-      #strip binary
-      - name: Strip binary
-        run: |
-          cd openal-soft/build
-          strip libopenal.dylib
       - name: Get release
         id: get_release
         uses: bruceadams/get-release@v1.2.2
@@ -90,11 +85,6 @@ jobs:
           cd build
           cmake ..
           make -j4 OpenAL
-      #strip binary
-      - name: Strip binary
-        run: |
-          cd openal-soft/build
-          strip libopenal.dylib
       - name: Get release
         id: get_release
         uses: bruceadams/get-release@v1.2.2
