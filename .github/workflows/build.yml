@@ -25,6 +25,11 @@ jobs:
           cd build
           cmake ..
           make -j4 OpenAL
+      #strip binary
+      - name: Strip binary
+        run: |
+          cd openal-soft/build
+          strip libopenal.so
       - name: Get release
         id: get_release
         uses: bruceadams/get-release@v1.2.2
@@ -50,6 +55,11 @@ jobs:
           cd build
           cmake ..
           make -j4 OpenAL
+      #strip binary
+      - name: Strip binary
+        run: |
+          cd openal-soft/build
+          strip libopenal.dylib
       - name: Get release
         id: get_release
         uses: bruceadams/get-release@v1.2.2
@@ -60,31 +70,6 @@ jobs:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
           asset_path: openal-soft/build/libopenal.dylib
           asset_name: libopenal-macos-x86_64.dylib
-          asset_content_type: application/octet-stream
-  #job to build openal-soft on linux arm64
-  build-linux-arm64:
-    name: build-linux-arm64
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-        with: 
-          submodules: true
-      - name: Build openal-soft
-        run: |
-          cd openal-soft
-          cd build
-          cmake ..
-          make -j4 OpenAL
-      - name: Get release
-        id: get_release
-        uses: bruceadams/get-release@v1.2.2
-      # upload release to github
-      - name: Upload
-        uses: actions/upload-release-asset@v1.0.2
-        with:
-          upload_url: ${{ steps.get_release.outputs.upload_url }}
-          asset_path: openal-soft/build/libopenal.so
-          asset_name: libopenal-linux-arm64.so
           asset_content_type: application/octet-stream
   #job to cross compile openal-soft for macos arm64
   cross-compile-macos-arm64:
@@ -105,6 +90,11 @@ jobs:
           cd build
           cmake ..
           make -j4 OpenAL
+      #strip binary
+      - name: Strip binary
+        run: |
+          cd openal-soft/build
+          strip libopenal.dylib
       - name: Get release
         id: get_release
         uses: bruceadams/get-release@v1.2.2
