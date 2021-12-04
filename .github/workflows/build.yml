@@ -1,11 +1,13 @@
 #build openal-soft on linux/macos/windows
 name: build
-
 on:
   release:
-    types
+    types: 
       - created
   workflow_dispatch:
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   #job to build openal-soft on linux x86-64
