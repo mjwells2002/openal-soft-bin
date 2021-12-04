@@ -1,0 +1,93 @@
+#build openal-soft on linux/macos/windows
+name: build
+
+on:
+  release:
+    types
+      - created
+  workflow_dispatch:
+
+jobs:
+  #job to build openal-soft on linux x86-64
+  build-linux-x86-64:
+    name: build-linux-x86-64
+    runs-on: ubuntu-latest
+    steps:
+      #checkout submodules
+      - uses: actions/checkout@v2
+        name: checkout
+        checkout:
+          path: .
+          depth: 1
+          submodules: true
+      - name: Build openal-soft
+        run: |
+          cd openal-soft
+          cd build
+          cmake ..
+          make -j4
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.2
+      # upload release to github
+      - name: Upload
+        uses: actions/upload-release-asset@v1.0.2
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: openal-soft/build/libopenal.so
+          asset_name: libopenal-linux-x86_64.so
+          asset_content_type: application/octet-stream
+  #job to build openal-soft on macos x86-64
+  build-macos-x86-64:
+    name: build-macos-x86-64
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: checkout
+        checkout:
+          path: .
+          depth: 1
+          submodules: true
+      - name: Build openal-soft
+        run: |
+          cd openal-soft
+          cd build
+          cmake ..
+          make -j4
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.2
+      # upload release to github
+      - name: Upload
+        uses: actions/upload-release-asset@v1.0.2
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: openal-soft/build/libopenal.dylib
+          asset_name: libopenal-macos-x86_64.dylib
+  #job to build openal-soft on windows x86-64
+  build-windows-x86-64:
+    name: build-windows-x86-64
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: checkout
+        checkout:
+          path: .
+          depth: 1
+          submodules: true
+      - name: Build openal-soft
+        run: |
+          cd openal-soft
+          cd build
+          cmake ..
+          make -j4
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.2
+      # upload release to github
+      - name: Upload
+        uses: actions/upload-release-asset@v1.0.2
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: openal-soft/build/libopenal.dll
+          asset_name: libopenal-windows-x86_64.dll
