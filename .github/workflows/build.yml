@@ -2,7 +2,7 @@
 name: build
 on:
   release:
-    types: 
+    types:
       - created
   workflow_dispatch:
 
@@ -16,11 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       #checkout submodules
-      - uses: actions/checkout@v2
-        name: checkout
-        checkout:
-          path: .
-          depth: 1
+      - uses: actions/checkout@v1
+        with: 
           submodules: true
       - name: Build openal-soft
         run: |
@@ -44,11 +41,8 @@ jobs:
     name: build-macos-x86-64
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
-        name: checkout
-        checkout:
-          path: .
-          depth: 1
+      - uses: actions/checkout@v1
+        with: 
           submodules: true
       - name: Build openal-soft
         run: |
@@ -71,11 +65,8 @@ jobs:
     name: build-windows-x86-64
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
-        name: checkout
-        checkout:
-          path: .
-          depth: 1
+      - uses: actions/checkout@v1
+        with: 
           submodules: true
       - name: Build openal-soft
         run: |
